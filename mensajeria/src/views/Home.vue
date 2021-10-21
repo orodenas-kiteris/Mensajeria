@@ -10,7 +10,7 @@
   <div class="form-group">
     <label for="exampleInputEmail1">Correo Electrónico</label>
     <input type="email" class="form-control" id="login" aria-describedby="emailHelp" v-model="usuario">
-    <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+    
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">Password</label>
@@ -20,12 +20,17 @@
   <button type="submit" class="btn btn-primary">Acceder</button>
 </form>
   </div>
+  <div>
+    <h3 style="color:red">
+     {{error_msg}}
+    </h3>
+  </div>
 </template>
 
 <script>
-//import axios from 'axios';
-import comprobarAcceso from "@/models/bbdd.js";
 
+
+import comprobarAcceso from "@/models/bbdd";
 
 export default {
   name: 'Home',
@@ -36,7 +41,7 @@ export default {
     return {
       usuario:"",
       password:"",
-      error: false,
+      error: true,
       error_msg:"",
     }
 
@@ -44,27 +49,16 @@ export default {
   methods:{
     login(){
      
-     /*
-      let json ={
-        "usuario": this.usuario,
-        "password": this.password
-      };
-      */
-      /*
-      axios.popst('http://solodata.es/auth', json)
-          .then(data =>{
-            console.log(data);
-          })
-          */
-         /*
-         fetch('http://yesno.wtf')
-         .then( resp=> {
-           console.log(resp)
-         })
-         .catch(err=>console.log(err))
-         */
+     
         let admitir = comprobarAcceso(this.usuario, this.password)
-        console.log(admitir)
+      
+        if(admitir)
+            {
+              this.$store.commit('cambiarUsuario', this.usuario)
+              this.$router.push({ name: 'vistaMensajes' })
+            }else{
+              this.error_msg= "El Usuario o la contraseña no son correctos"
+            }
          
     }
   }
