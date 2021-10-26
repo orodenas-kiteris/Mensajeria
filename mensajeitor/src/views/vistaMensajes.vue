@@ -4,10 +4,10 @@
   </div>
 
 <div>
-    <button class="btn btn-primary" type="submit">Todos</button>
-    <button class="btn btn-primary" type="submit">Leidos</button>
-    <button class="btn btn-primary" type="submit">No leidos</button>
-    <button class="btn btn-primary" type="submit">Borrados</button>
+    <button class="btn btn-primary" @click="buscarMen()">Todos</button>
+    <button class="btn btn-primary" @click="buscarMenLeidos()">Leidos</button>
+    <button class="btn btn-primary" @click="buscarMenNoleidos()">No leidos</button>
+    <button class="btn btn-primary" @click="buscarMenBorrados()">Borrados</button>
 </div>
     
     <table class="table table-bordered">
@@ -42,7 +42,7 @@
   </div>
 </template>
 <script>
-import { buscarMensajes } from '@/models/bbdd'
+import { buscarMensajes, buscarMensajesLeidos, buscarMensajesNoleidos, buscarMensajesBorrados } from '@/models/bbdd'
 
 
 export default {
@@ -51,7 +51,10 @@ export default {
   data (){
     return {
       usuario  : this.$store.state.usuario,
-      mensajes :  buscarMensajes(this.$store.state.usuario)
+      mensajes : this.buscarMenLeidos(this.$store.state.usuario),
+      leidos    : "leido",
+      Noleidos  : "Noleido",
+      borrados : "borrado"
     }
 
   },
@@ -61,6 +64,26 @@ export default {
              this.$store.commit('leerMensaje', item)
              this.$router.push({ name: 'leer' })
          },
+
+         buscarMen(){
+
+           this.mensajes = buscarMensajes(this.$store.state.usuario)
+         },
+         buscarMenLeidos(){
+
+           this.mensajes = buscarMensajesLeidos(this.$store.state.usuario)
+         },
+         buscarMenNoleidos(){
+
+           this.mensajes = buscarMensajesNoleidos(this.$store.state.usuario)
+         },
+         buscarMenBorrados(){
+
+           this.mensajes = buscarMensajesBorrados(this.$store.state.usuario)
+         },
+
+
+
          
          
 
@@ -75,6 +98,8 @@ export default {
     height: calc( 100vh - 115px);
     overflow: scroll;
 }
-
+.btn {
+  margin:20px;
+}
 
 </style>

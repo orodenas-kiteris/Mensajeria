@@ -42,7 +42,7 @@
   </div>
 </template>
 <script>
-import { buscarMensajes } from '@/models/bbdd'
+import { buscarMensajes } from '@/models/bbdd.js'
 
 
 export default {
