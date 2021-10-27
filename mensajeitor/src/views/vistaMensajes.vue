@@ -47,11 +47,18 @@ import { buscarMensajes, buscarMensajesLeidos, buscarMensajesNoleidos, buscarMen
 
 export default {
 
+created(){
+
+  
+this.buscarMenNoleidos(this.$store.state.usuario)
+
+
+},
 
   data (){
     return {
       usuario  : this.$store.state.usuario,
-      mensajes : this.buscarMenLeidos(this.$store.state.usuario),
+      mensajes : this.buscarMenNoleidos(this.$store.state.usuario),
       leidos    : "leido",
       Noleidos  : "Noleido",
       borrados : "borrado"
